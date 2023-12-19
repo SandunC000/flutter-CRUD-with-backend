@@ -21,4 +21,17 @@ class Api {
       print(e.toString());
     }
   }
+
+  static getProduct() async {
+    var url = Uri.parse("${baseUrl}get_product");
+
+    try {
+      final res = await http.get(url);
+
+      if (res.statusCode == 200) {
+      } else {}
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }
