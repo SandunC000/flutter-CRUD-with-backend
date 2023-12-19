@@ -36,14 +36,30 @@ class Api {
         var data = jsonDecode(res.body);
         data['products'].forEach((value) => {
               products.add(Product(
-                  name: value['pname'],
-                  desc: value['pdesc'],
-                  price: value['pprice']))
+                id: value['id'].toString(),
+                name: value['pname'],
+                desc: value['pdesc'],
+                price: value['pprice'],
+              ))
             });
 
         return products;
       } else {
         return [];
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  static updatePut(id, body) async {
+    var url = Uri.parse("${baseUrl}update/$id");
+    try {
+      final res = await http.put(url, body: body);
+      if (res.statusCode == 200) {
+        print(jsonDecode(res.body));
+      } else {
+        print("failed");
       }
     } catch (e) {
       print(e.toString());

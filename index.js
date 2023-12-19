@@ -1,8 +1,6 @@
 const express = require('express');
-
 const app = express();
 app.use(express.json());
-
 app.use(
     express.urlencoded({
         extended: true,
@@ -16,7 +14,6 @@ app.listen(2000, () => {
 });
 
 //post api
-
 app.post('/api/add_product', (req, res) => {
     console.log('Result', req.body);
 
@@ -37,17 +34,32 @@ app.post('/api/add_product', (req, res) => {
     });
 });
 
-app.get("/api/get_product",(req,res)=> {
-    if(productData.length>0) {
+//post api
+app.get("/api/get_product", (req, res) => {
+    if (productData.length > 0) {
         res.status(200).send({
-            'status_code' :200,
-            'products' : productData
+            'status_code': 200,
+            'products': productData
         })
-    }else{
+    } else {
         res.status(200).send({
-            'status_code' :200,
-            'products' : []
+            'status_code': 200,
+            'products': []
         })
-        
+
     }
+})
+
+//update api put
+app.put("/api/update/:id", (req, res) => {
+    let id = req.params.id * 1;
+    let productToUpdate = productData.find(p => p.id === id);
+    let index = productData.indexOf(productToUpdate);
+
+    productData[index] = req.body;
+
+    res.status(200).send({
+        'status': "success",
+        'message': "product updated",
+    })
 })
