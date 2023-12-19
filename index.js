@@ -44,6 +44,10 @@ app.get("/api/get_product",(req,res)=> {
             'products' : productData
         })
     }else{
+        res.status(200).send({
+            'status_code' :200,
+            'products' : []
+        })
         
     }
 })

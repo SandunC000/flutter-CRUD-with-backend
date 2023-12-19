@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:node/create.dart';
 
+import 'fetch.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -26,7 +28,10 @@ class _HomeViewState extends State<HomeView> {
                     ));
               },
               child: const Text("CREATE")),
-          ElevatedButton(onPressed: () {}, child: const Text("READ")),
+          ElevatedButton(onPressed: () {Navigator.push(
+              context,
+              MaterialPageRoute(
+              builder: (context) => const FetchData()));}, child: const Text("READ")),
           ElevatedButton(onPressed: () {}, child: const Text("UPDATE")),
           ElevatedButton(onPressed: () {}, child: const Text("DELETE")),
         ],

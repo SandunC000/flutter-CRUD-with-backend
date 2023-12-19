@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../model/product_model.dart';
+
 class Api {
   static const baseUrl = "http://192.168.54.79/api/";
 
@@ -23,13 +25,26 @@ class Api {
   }
 
   static getProduct() async {
+    List<Product> products = [];
+
     var url = Uri.parse("${baseUrl}get_product");
 
     try {
       final res = await http.get(url);
 
       if (res.statusCode == 200) {
-      } else {}
+        var data = jsonDecode(res.body);
+        data['products'].forEach((value) => {
+              products.add(Product(
+                  name: value['pname'],
+                  desc: value['pdesc'],
+                  price: value['pprice']))
+            });
+
+        return products;
+      } else {
+        return [];
+      }
     } catch (e) {
       print(e.toString());
     }
