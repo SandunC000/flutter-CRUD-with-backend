@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:node/create.dart';
+import 'package:node/delete.dart';
 import 'package:node/edit_view.dart';
 import 'package:node/update.dart';
 
@@ -42,7 +43,10 @@ class _HomeViewState extends State<HomeView> {
                     MaterialPageRoute(builder: (context) => const UpdateView()));
               },
               child: const Text("UPDATE")),
-          ElevatedButton(onPressed: () {}, child: const Text("DELETE")),
+          ElevatedButton(onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const DeleteView()));
+          }, child: const Text("DELETE")),
         ],
       ),
     );

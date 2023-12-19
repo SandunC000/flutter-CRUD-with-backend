@@ -45,8 +45,8 @@ class _CreateDataState extends State<CreateData> {
               "pprice" : priceController.text,
               "pdesc" : descController.text,
             };
-
             Api.addproduct(data);
+
           }, child: const Text("Create Data")),
         ],
       ),
