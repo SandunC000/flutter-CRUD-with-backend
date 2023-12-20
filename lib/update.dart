@@ -19,20 +19,20 @@ class UpdateView extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             } else {
-              List<Product> pdata = snapshot.data;
+              Products pdata = snapshot.data;
               return ListView.builder(
-                  itemCount: pdata.length,
+                  itemCount: pdata.products?.length,
                   itemBuilder: (context, index) {
                     return ListTile(
                       leading: const Icon(Icons.storage),
-                      title: Text("${pdata[index].name}"),
-                      subtitle: Text("${pdata[index].desc}"),
+                      title: Text("${pdata.products?[index].name}"),
+                      subtitle: Text("${pdata.products?[index].desc}"),
                       trailing: IconButton(
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => EditView(data: pdata[index],)));
+                                  builder: (context) => EditView(data: pdata.products![index],)));
                         },
                         icon: const Icon(Icons.edit),
                       ),

@@ -5,13 +5,13 @@ import 'package:http/http.dart' as http;
 import '../model/product_model.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.54.79/api/";
+  static const baseUrl = "http://192.168.217.79/api/";
 
-  static addproduct(Map pdata) async {
+  static addproduct(Product pdata) async {
     var url = Uri.parse("${baseUrl}add_product");
 
     try {
-      final res = await http.post(url, body: pdata);
+      final res = await http.post(url, body: pdata.toJson());
 
       if (res.statusCode == 200) {
         var data = jsonDecode(res.body.toString());
@@ -25,7 +25,7 @@ class Api {
   }
 
   static getProduct() async {
-    List<Product> products = [];
+    Products products;
 
     var url = Uri.parse("${baseUrl}get_product");
 
@@ -34,15 +34,8 @@ class Api {
 
       if (res.statusCode == 200) {
         var data = jsonDecode(res.body);
-        data['products'].forEach((value) => {
-              products.add(Product(
-                id: value['id'].toString(),
-                name: value['pname'],
-                desc: value['pdesc'],
-                price: value['pprice'],
-              ))
-            });
 
+        products = Products.fromJson(data);
         return products;
       } else {
         return [];
@@ -52,12 +45,14 @@ class Api {
     }
   }
 
-  static updatePut(id, body) async {
-    var url = Uri.parse("${baseUrl}update/$id");
+  static updatePatch(Product data) async {
+    var url = Uri.parse("${baseUrl}update/${data.id}");
     try {
-      final res = await http.put(url, body: body);
+      final res = await http.patch(url, body: jsonEncode(data.toJson()));
       if (res.statusCode == 200) {
-        print(jsonDecode(res.body));
+        final updatedData = jsonDecode(res.body);
+        print(updatedData);
+        print("Request Payload: ${jsonEncode(data.toJson())}");
       } else {
         print("failed");
       }

@@ -47,12 +47,13 @@ class _EditViewState extends State<EditView> {
             const SizedBox(height: 50),
             ElevatedButton(
                 onPressed: () {
-                  Api.updatePut(widget.data.id, {
-                    "pname": nameController.text,
-                    "pprice": priceController.text,
-                    "pdesc": descController.text,
-                    "id" : widget.data.id
-                  });
+                  Product newProduct = Product(
+                      id: widget.data.id,
+                      name: nameController.text,
+                      price: priceController.text,
+                      desc: descController.text);
+
+                  Api.updatePatch(newProduct);
                 },
                 child: const Text("Update"))
           ],

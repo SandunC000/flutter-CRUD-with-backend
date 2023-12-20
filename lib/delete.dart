@@ -34,7 +34,7 @@ class _DeleteViewState extends State<DeleteView> {
                     trailing: IconButton(
                       onPressed: () {
                         setState(() {
-                          Api.deleteProduct(pdata[index].id);
+                          Api.deleteProduct(pdata[index].name);
                         });
                       },
                       icon: const Icon(Icons.delete),

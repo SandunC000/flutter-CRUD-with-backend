@@ -18,15 +18,15 @@ class FetchData extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else {
-            List<Product> pdata = snapshot.data;
+            Products pdata = snapshot.data;
             return ListView.builder(
-                itemCount: pdata.length,
+                itemCount: pdata.products?.length,
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: const Icon(Icons.storage),
-                    title: Text("${pdata[index].name}"),
-                    subtitle: Text("${pdata[index].desc}"),
-                    trailing: Text("\S ${pdata[index].price}"),
+                    title: Text("${pdata.products?[index].name}"),
+                    subtitle: Text("${pdata.products?[index].desc}"),
+                    trailing: Text("\$ ${pdata.products?[index].price}"),
 
                   );
                 });
