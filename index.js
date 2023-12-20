@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 app.use(express.json());
 app.use(
@@ -9,9 +10,21 @@ app.use(
 
 const productData = [];
 
-app.listen(2000, () => {
-    console.log('connected to server at 2000');
+//connect to mongoose
+
+mongoose.connect("mongodb+srv://sanduncooray000:0713209287SaN@cluster0.1ug0tbm.mongodb.net/?retryWrites=true&w=majority", {
+    ssl: true, // Add this line
 });
+
+
+const db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+    console.log("Connected to Mongoose");
+});
+
+
 
 //post api
 app.post('/api/add_product', (req, res) => {
@@ -34,7 +47,7 @@ app.post('/api/add_product', (req, res) => {
     });
 });
 
-//post api
+//get api
 app.get("/api/get_product", (req, res) => {
     if (productData.length > 0) {
         res.status(200).send({
@@ -77,3 +90,7 @@ app.post("/api/delete/:id", (req, res) => {
         'message': 'product deleted'
     })
 })
+
+app.listen(2000, () => {
+    console.log('connected to server at 2000');
+});
